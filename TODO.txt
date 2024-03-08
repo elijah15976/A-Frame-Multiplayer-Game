@@ -1,0 +1,4 @@
+Powerup Ideas:
+- Kill one ghost
+- Break walls
+- See ghosts through walls (limited time)

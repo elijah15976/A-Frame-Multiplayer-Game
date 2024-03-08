@@ -1,0 +1,11 @@
+Model Information:
+* title:	pacman arcade machine
+* source:	https://sketchfab.com/3d-models/pacman-arcade-machine-bd84b716519e4f9aa2f2e3b93210c565
+* author:	Musti575uz (https://sketchfab.com/Musti575uz)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "pacman arcade machine" (https://sketchfab.com/3d-models/pacman-arcade-machine-bd84b716519e4f9aa2f2e3b93210c565) by Musti575uz (https://sketchfab.com/Musti575uz) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)

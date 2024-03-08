@@ -1,0 +1,11 @@
+% This is a template for how player data would be transfered to and from the server{
+{
+  "id":"User_ID",
+  "name":"Username",
+  "posx": 0,
+  "posy": 0,
+  "posz": 0,
+  "rotx": 0,
+  "roty": 0,
+  "rotz": 0,
+}

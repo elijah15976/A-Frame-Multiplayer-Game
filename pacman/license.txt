@@ -1,0 +1,11 @@
+Model Information:
+* title:	Girl Pacman (Animated)
+* source:	https://sketchfab.com/3d-models/girl-pacman-animated-8c6707e13e9349df8ef83f21cce5ea39
+* author:	packy films (https://sketchfab.com/packyfilms)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "Girl Pacman (Animated)" (https://sketchfab.com/3d-models/girl-pacman-animated-8c6707e13e9349df8ef83f21cce5ea39) by packy films (https://sketchfab.com/packyfilms) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)

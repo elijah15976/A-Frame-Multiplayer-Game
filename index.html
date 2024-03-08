@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <title>Some Game idk lmao ahHAHAHA</title>
+    <link href="style.css" rel="stylesheet" type="text/css" />
+    <!-- A-Frame -->
+    <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/c-frame/aframe-extras@7.2.0/dist/aframe-extras.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/c-frame/aframe-physics-system@v4.2.2/dist/aframe-physics-system.min.js"></script>
+
+    <!-- J-query -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
+    <!-- External JavaScript -->
+    <script src="communication.js"></script>
+    <script src="staminaBar.js"></script>
+    <script src="key.js"></script>
+    <script src="walls.js"></script>
+    <script src="room.js"></script>
+    <script src="player.js"></script>
+    <script src="helper.js"></script>
+    <script src="kinema.js"></script>
+
+    <script src="script.js"></script>
+  </head>
+  <body>
+    <a-scene inspector="url: xxx"> <!--light="defaultLightsEnabled: false"--> 
+      <a-assets>
+        <img id="roof" src="ceilingTexture.jpeg" />
+        <img id="wall" src="wallTexture.jpg" />
+        <img id="floor" src="floorTexture.jpg" />
+        <img id="lobbyWall" src="pacmanWallpaper.png"/>
+
+        <audio id="pacmanAtmosphere" src="Pacman-Atmosphere.mp3" preload="auto"></audio>
+        <audio id="ghostAtmosphere" src="Ghost-Atmosphere.mp3" preload="auto"></audio>
+        <audio id="ghostClose" src="ghostIsClose.mp3" preload="auto"></audio>
+        <audio id="pacmanWaka" src="wakawaka.mp3" preload="auto"></audio>
+        
+        <a-asset-item src="arcadeMachine/scene.gltf" id="arcadeMachine"></a-asset-item>
+        <a-asset-item src="ghoul/scene.gltf" id="ghostModel"></a-asset-item>
+        <a-asset-item src="pacman/scene.gltf" id="pacmanModel"></a-asset-item>
+        <a-asset-item src="key/scene.gltf" id="key"></a-asset-item>
+      </a-assets>
+
+      <a-entity id="default-lights">
+        <a-entity light="type: ambient; color: #BBB"></a-entity>
+        <a-entity light="type: directional; color: #FFF; intensity: 0.6" position="-0.5 1 1"></a-entity>
+      </a-entity>
+
+      <!-- Lobby -->
+      <a-entity>
+        <a-box static-body src="#lobbyWall" position="0 2.5 -20" height="5" width="40" depth="0.1" >
+          <a-box id="leaderboard" color="black" width="9" height="5" depth="0.2">
+            <a-text value="Leaderboard" scale="3 3 3" position="0 2 0.1" align="center"></a-text>
+            <a-entity id="pacmanLead" position="-2.25 -0.25 0.1">
+              <a-text id="pacmanLeadHead" value="Pacman Wins" position="0 1.5 0" scale="2 2 2" align="center"></a-text>
+              <a-text id="pacmanLead1" value="Blank" position="0 1 0" align="center"></a-text>
+              <a-text id="pacmanLead2" value="Blank" position="0 0.6 0" align="center"></a-text>
+              <a-text id="pacmanLead3" value="Blank" position="0 0.2 0" align="center"></a-text>
+              <a-text id="pacmanLead4" value="Blank" position="0 -0.2 0" align="center"></a-text>
+              <a-text id="pacmanLead5" value="Blank" position="0 -0.6 0" align="center"></a-text>
+              <a-text id="pacmanLead6" value="Blank" position="0 -1 0" align="center"></a-text>
+              <a-text id="pacmanLead7" value="Blank" position="0 -1.4 0" align="center"></a-text>
+              <a-text id="pacmanLead8" value="Blank" position="0 -1.8 0" align="center"></a-text>
+            </a-entity>
+            <a-entity id="ghostLead" position="2.25 -0.25 0.1">
+              <a-text id="ghostLeadHead" value="Ghost Wins" position="0 1.5 0" scale="2 2 2" align="center"></a-text>
+              <a-text id="ghostLead1" value="Blank" position="0 1 0" align="center"></a-text>
+              <a-text id="ghostLead2" value="Blank" position="0 0.6 0" align="center"></a-text>
+              <a-text id="ghostLead3" value="Blank" position="0 0.2 0" align="center"></a-text>
+              <a-text id="ghostLead4" value="Blank" position="0 -0.2 0" align="center"></a-text>
+              <a-text id="ghostLead5" value="Blank" position="0 -0.6 0" align="center"></a-text>
+              <a-text id="ghostLead6" value="Blank" position="0 -1 0" align="center"></a-text>
+              <a-text id="ghostLead7" value="Blank" position="0 -1.4 0" align="center"></a-text>
+              <a-text id="ghostLead8" value="Blank" position="0 -1.8 0" align="center"></a-text>
+            </a-entity>
+            <a-entity id="refreshLeaderboard" position="5 -0.5 0" interactable>
+              <a-cylinder rotation="90 0 0" color="#80669d" height="0.3" radius="0.2" interactable></a-cylinder>
+              <a-cylinder rotation="90 0 0" color="#949494" height="0.2" radius="0.25" interactable></a-cylinder>
+              <a-text value="Refresh" color="white" position="0 0.5 0.1" align="center" interactable></a-text>
+            </a-entity>
+          </a-box>
+        </a-box>
+        <a-box static-body src="#lobbyWall" position="0 2.5 20" height="5" width="40" depth="0.1" ></a-box>
+        <a-box static-body src="#lobbyWall" position="20 2.5 0" height="5" width="40" depth="0.1" rotation="0 90 0" ></a-box>
+        <a-box static-body src="#lobbyWall" position="-20 2.5 0" height="5" width="40" depth="0.1" rotation="0 90 0">
+          <a-entity>
+            <a-text value="Lobby Picker" scale="3 3 3" position="0 1 0.1" align="center"></a-text>
+            <a-text value="Lobby 1" position="-2 -0.5 0.1" align="center"></a-text>
+            <a-box position="-2 -1 0" width="0.5" height="0.5" depth="0.5" color="white"></a-box>
+            <a-text value="Lobby 2" position="0 -0.5 0.1" align="center"></a-text>
+            <a-box position="0 -1 0" width="0.5" height="0.5" depth="0.5" color="#80669d" onclick="window.location.href='https://a-frame-multiplayer-game-lobby-2-elijah15976.replit.app'" interactable></a-box>
+            <a-text value="Lobby 3" position="2 -0.5 0.1" align="center"></a-text>
+            <a-box position="2 -1 0" width="0.5" height="0.5" depth="0.5" color="#80669d" onclick="window.location.href='https://a-frame-multiplayer-game-lobby-3-elijah15976.replit.app'" interactable></a-box>
+          </a-entity>
+        </a-box>
+        <a-entity id="startButton" interactable>
+          <a-text value="START" position="-0.7 .4 0" rotation="-90 0 0" scale="2 2 2" interactable></a-text>
+          <a-cylinder color="#00FF00" radius="1" height="0.7" interactable></a-cylinder>
+          <a-cylinder color="#949494" radius="1.2" height="0.5" interactable></a-cylinder>
+        </a-entity>
+        <a-entity id="spectateButton" position="2.25 0 0" scale="0.6 0.6 0.6" interactable>
+          <a-text value="Spectate" position="-0.9 .4 -0.1" rotation="-90 0 0" scale="2 2 2" interactable></a-text>
+          <a-text value="(Press &quot;p&quot; to return to lobby)" position="-0.82 .4 0.3" rotation="-90 0 0" scale="0.6 0.6 0.6" interactable></a-text>
+          <a-cylinder color="#00BBFF" radius="1" height="0.7" interactable></a-cylinder>
+          <a-cylinder color="#949494" radius="1.2" height="0.5" interactable></a-cylinder>
+        </a-entity>
+        <a-text id="playerCountQueue" value="0/5" position="-0.2 1.4 0" side="double" opacity="0"></a-text>
+      </a-entity>
+
+      <!-- Ghost Room -->
+      <a-entity id="ghostRoom" position="0 10 0" scale="0.7 0.7 0.7">
+        <a-box static-body height="8" width="20" color="black" position="0 4 -10">
+          <a-box static-body scale="0.6 0.6 0.6" height="3" width="6" depth="0.1" position="2 0 0.5">
+            <a-text value="Pac-man is running around in the maze below. Find him and catch him 3 times before he collects all his items." position="0 0 0.1" color="black" align="center" font="https://cdn.aframe.io/fonts/mozillavr.fnt">
+              </a-text>
+          </a-box>
+        </a-box>
+
+        <a-box static-body height="8" width="20" depth="0.1"src="ghostWallpaper.jpg" position="0 4 10">
+          <a-text value="Ghost Room" scale="4 4 4" position="0 3 -0.1" rotation="0 180 0" side="double" align="center" font="https://cdn.aframe.io/fonts/mozillavr.fnt">
+          </a-text>
+
+        </a-box>
+
+        <a-box static-body height="8" width="20" depth="0.1" color="blue" position="10 4 0" rotation="0 90 0">
+            <a-text value="Game starts in..." position="0 3 -0.1" rotation="0 180 0" scale="4 4 4" align="center" font="https://cdn.aframe.io/fonts/mozillavr.fnt">
+            </a-text>
+            <a-text id="timer" value="10" font="https://cdn.aframe.io/fonts/mozillavr.fnt" scale="10 10 10" position="0 0 -0.1" rotation="0 180 0" side="double" rotation="0 90 0">
+            </a-text>
+        </a-box>
+
+        <a-box static-body height="8" width="20" depth="0.1"color="purple" position="-10 4 0" rotation="0 90 0">
+        </a-box>
+
+        <a-box static-body height="20" width="20" depth="0.1" rotation="90 0 0" color="black">
+        </a-box>
+
+        <a-box static-body height="20" width="20" depth="0.1" rotation="90 0 0" color="black" position="0 8 0">
+        </a-box>
+
+        <a-entity id="pacmanModel" position="0 0 -9">
+          <a-gltf-model src="#pacmanModel" position="0 2 0" scale="0.5 0.5 0.5">
+          </a-gltf-model>
+          <a-cylinder color="yellow" height="2" position="0 1 0" radius="0.5">
+          </a-cylinder>
+        </a-entity>
+
+        <a-gltf-model src="#arcadeMachine" position="-8.7 0 0" rotation="0 90 0" scale="0.4 0.4 0.4">
+        </a-gltf-model>
+
+        <a-gltf-model src="#arcadeMachine" position="-8.7 0 -2" rotation="0 90 0" scale="0.4 0.4 0.4">
+        </a-gltf-model>
+
+        <a-gltf-model src="#arcadeMachine"  position="-8.7 0 2"  rotation="0 90 0"  scale="0.4 0.4 0.4">
+        </a-gltf-model>
+
+
+      </a-entity>
+
+      <!-- Spectating Room -->
+      <a-entity id="spectatingRoom" position="150 10 130">
+        <a-plane static-body rotation="-90 0 0" width="200" height="160" color="white" opacity="0.2"></a-plane>
+        <a-box static-body position="0 2 -80" height="4" width="200" depth="0.1" color="gray">
+          <a-text value="SPECTATING LOBBY" scale="16 16 16" position="-67 0 -0.15" rotation="0 180 0"></a-text>
+        </a-box>
+        <a-box static-body position="0 2 80" height="4" width="200" depth="0.1" color="gray"></a-box>
+        <a-box static-body position="-100 2 0" rotation="0 90 0" height="4" width="160" depth="0.1" color="gray"></a-box>
+        <a-box static-body position="100 2 0" rotation="0 90 0" height="4" width="160" depth="0.1" color="gray"></a-box>
+      </a-entity>
+      
+      <a-text position="-1.9 1.5 -5" value="Try clicking the box, and then the face" color="black" side="double"></a-text>
+      
+      <a-box position="0 0.5 -3" id="default-box" color="black" shadows="recieve: true" interactable static-body></a-box>
+      <a-box position="0 0.5 -2.5" width="0.6" height="0.4" depth="0.01" id="someTextLMAO" wireframe="true" interactable static-body>
+        <a-text position="-0.3 0 0" id="theTextWithin" rotation="0 0 0" color="blue" value="(O_O)"></a-text>
+      </a-box>
+
+      <!-- On presentation day, comment this out -->
+      <!-- <a-box position="0 0.5 -7" color="green" onclick="socket.send('el em en oh pee')" shadows="recieve: true" interactable static-body></a-box> -->
+
+      <!-- <a-sky color="rgb(135,206,235)"></a-sky> -->
+      <a-sky color="black"></a-sky>
+      <a-plane position="0 0 -4" rotation="-90 0 0" width="50" height="50" color="#7BC8A4" shadow="receive:true" static-body></a-plane>
+
+      <a-entity id="mazeSpace" position="50 0 50"></a-entity>
+
+      <a-entity position="0 0 2" id="camRig" kinema-body="radius:0.5" movement-controls="speed:0.2;">
+        <a-entity camera id="camera" position="0 2.1 0" look-controls="pointerLockEnabled: true">
+        </a-entity>
+      </a-entity>
+    </a-scene>
+  </body>
+</html>
